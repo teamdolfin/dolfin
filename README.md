@@ -1,2 +1,2 @@
 # dolfin
-*.java @teamdolfin/dolfinmember
+*@teamdolfin/dolfinmember
