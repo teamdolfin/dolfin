@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/frag_mypage"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_my_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="30dp">
+        <LinearLayout
+            android:id="@+id/layout_my_info1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.4"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp">
+            <TextView
+                android:id="@+id/btn_my_nickname"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/btnMyNickname"
+                android:background="@color/babyblue"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/white"></TextView>
+            <TextView
+                android:id="@+id/nickname"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.4"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_my_info2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.4"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp">
+            <TextView
+                android:id="@+id/btn_my_gmail"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/babyblue"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:text="@string/btnMyGmail">
+            </TextView>
+            <TextView
+                android:id="@+id/tv_my_gmail"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.4"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"  />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_my_info3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.4"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp">
+            <TextView
+                android:id="@+id/btn_my_point"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/babyblue"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:text="@string/btnMyPoint"></TextView>
+            <TextView
+                android:id="@+id/tv_user_point"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.4"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp" />
+        </LinearLayout>
+        <ToggleButton
+            android:id="@+id/toggleAlarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="알림 해제"
+            android:textOn="알림 설정"/>
+        <Button
+            android:id="@+id/btnMakeAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/bluegrotto"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"
+            android:text="알림 설정하기"/>
+        <Button
+            android:id="@+id/btn_infoChange"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/bluegrotto"
+            android:layout_marginBottom="10dp"
+            android:text="닉네임 수정" />
+        <Button
+            android:id="@+id/btnMyCalender"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/bluegrotto"
+            android:layout_marginBottom="10dp"
+            android:text="@string/btnMyCalender" />
+
+        <Button
+            android:id="@+id/btnMyBadge"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/bluegrotto"
+            android:layout_marginBottom="10dp"
+            android:text="@string/btnMyBadge" />
+
+        <Button
+            android:id="@+id/dolfinExit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/bluegrotto"
+            android:layout_marginBottom="10dp"
+            android:text="@string/dolfinExit" />
+    </LinearLayout>
+</LinearLayout>

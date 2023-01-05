@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <GridLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/image_listMenu"
+        android:layout_width="115dp"
+        android:layout_height="90dp"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        android:layout_rowSpan="2"
+        android:layout_row="0"
+        android:layout_column="0" />
+
+    <TextView
+        android:id="@+id/list_tel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_rowSpan="1"
+        android:padding="10dp"
+        android:layout_columnWeight="1"
+
+        android:layout_row="1"/>
+
+    <TextView
+        android:id="@+id/list_name"
+        android:layout_width="wrap_content"
+        android:layout_height="47dp"
+        android:layout_column="1"
+        android:layout_row="0"
+        android:padding="10dp"
+        android:layout_columnWeight="1"
+        android:layout_rowSpan="1"
+        android:text="TextView" />
+
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:layout_column="2"
+        android:layout_row="0"
+        android:layout_rowSpan="2"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="" />
+  </GridLayout>
+
+</LinearLayout>
