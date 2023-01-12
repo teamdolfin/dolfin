@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:id="@+id/layout_chal1_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/layout_chal1_feed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rowCount="2"
+        app:columnCount="4"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnChalintro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/btnChalIntro"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></Button>
+
+        <TextView
+            android:id="@+id/introview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="3km 걸으며 쓰레기 줍기 챌린지 입니다. 3km 걸으며 쓰레기 줍기 챌린지 입니다. 3km 걸으며 쓰레기 줍기 챌린지 입니다. 3km 걸으며 쓰레기 줍기 챌린지 입니다. 3km 걸으며 쓰레기 줍기 챌린지 입니다. 3km 걸으며 쓰레기 줍기 챌린지 입니다."
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
+
+    //피드부분(겉부분 포함) 인증 사진, 글 예시
+    <LinearLayout
+        android:id="@+id/layout_chal1_feed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="1">
+        //피드부분(안쪽)
+        <ListView
+            android:id="@+id/feed_listview"
+            android:textFilterEnabled="true"
+            android:layout_width="match_parent"
+            android:dividerHeight="2dp"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    //하단 부분
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_chal1_end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnChalOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/btnChalOut"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></Button>
+
+        <Button
+            android:id="@+id/btnChalCalender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnChalCalender"
+
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnChalWrite"
+            app:layout_constraintTop_toTopOf="parent"></Button>
+
+        <Button
+            android:id="@+id/btnChalWrite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="@string/btnChalWrite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></Button>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

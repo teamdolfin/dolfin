@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_margin="0dp"
+        >
+
+        <ImageView
+            android:id="@+id/badge_exercise"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:padding="0sp"
+            android:src="@drawable/img_rk_exercise"
+            />
+
+        <ImageView
+            android:id="@+id/badge_health"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:padding="0sp"
+            android:src="@drawable/img_rank_health"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_margin="0dp">
+
+        <ImageView
+            android:id="@+id/badge_book"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:padding="0sp"
+            android:src="@drawable/img_rk_book"
+            />
+
+        <ImageView
+            android:id="@+id/badge_money"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:padding="0sp"
+            android:src="@drawable/img_rk_money"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_margin="0dp">
+
+
+        <ImageView
+            android:id="@+id/badge_hobby"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:padding="0sp"
+            android:src="@drawable/img_rk_hobby"
+            />
+
+
+        <ImageView
+            android:id="@+id/badge_study"
+            android:layout_width="match_parent"
+            android:layout_height="177dp"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:padding="0sp"
+            android:src="@drawable/img_rk_study" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
