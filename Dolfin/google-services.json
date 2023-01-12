@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "612945011607",
+    "project_id": "dolfin-5cf11",
+    "storage_bucket": "dolfin-5cf11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612945011607:android:d9b0d03a14c584d39a1ad2",
+        "android_client_info": {
+          "package_name": "edu.sungshin.dolfin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612945011607-9hg902jv2lbb5lidmj38isshdds3pmap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.sungshin.dolfin",
+            "certificate_hash": "0f2fd87bd99567485359f7fcbf04eaaf16391311"
+          }
+        },
+        {
+          "client_id": "612945011607-bua7re27qr2jj99n478r41ku7tbfq1ja.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.sungshin.dolfin",
+            "certificate_hash": "ea5a1736ec92ff6e2404a9084f1970d654d9b8c6"
+          }
+        },
+        {
+          "client_id": "612945011607-c039c2ai1j63u54nd4nk00724fq1ofa9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.sungshin.dolfin",
+            "certificate_hash": "e770561ddc7252644671a12c4c82110dd3873ba1"
+          }
+        },
+        {
+          "client_id": "612945011607-vpdtus573l6vr8qro7lhsff2mlvvsvgo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.sungshin.dolfin",
+            "certificate_hash": "e3f547d622bdc312a4e6b2874443c7c0dedb72b3"
+          }
+        },
+        {
+          "client_id": "612945011607-nbsff8b05b2u0hndorouumfvidiradd8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFMsbzwj53RT525vzaIRe6IyPf-BS9c8Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612945011607-nbsff8b05b2u0hndorouumfvidiradd8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

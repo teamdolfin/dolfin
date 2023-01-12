@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Dolfin_1121_ui_ver2/app/src/main/res/layout/frag_df_chal.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_1121_ui_ver2/app/src/main/res/layout/frag_df_chal_write.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_1121_ui_ver2/app/src/main/res/layout/frag_dolfin.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_1121_ui_ver2/app/src/main/res/layout/frag_my_badge.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_1121_ui_ver2/app/src/main/res/layout/frag_mypage.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_1121_ui_ver2/app/src/main/res/layout/notification.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_1121_ui_ver2/app/src/main/res/layout/rating_dialog.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_1121_ui_ver2/app/src/main/res/menu/menu_settings.xml" value="0.1" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/calendar.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/frag_chal_calendar.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/frag_df_chal.xml" value="0.1" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/frag_df_chal_write.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/frag_diagram.xml" value="0.20104166666666667" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/frag_dialog.xml" value="0.2" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/frag_dolfin.xml" value="0.1" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/frag_hm_exercise.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/frag_home.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/frag_login.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/frag_my_badge.xml" value="0.264" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/frag_my_calender.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/frag_mypage.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/frag_rank.xml" value="0.1" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/item_calendar_gridview.xml" value="0.22083333333333333" />
+        <entry key="..\:/Dolfin_week11_/Dolfin_1107_ui_3/app/src/main/res/layout/notification.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1107_ui_3/app/src/main/res/layout/activity_start.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1107_ui_3/app/src/main/res/layout/calendar.xml" value="0.30978260869565216" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1107_ui_3/app/src/main/res/layout/frag_df_chal.xml" value="0.30978260869565216" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1107_ui_3/app/src/main/res/layout/frag_df_chal_write.xml" value="0.30978260869565216" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1107_ui_3/app/src/main/res/layout/frag_login.xml" value="0.1" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1107_ui_3/app/src/main/res/layout/frag_my_badge.xml" value="0.30978260869565216" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1122_ui_ver3/app/src/main/res/layout/activity_nickname.xml" value="0.31354166666666666" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1122_ui_ver3/app/src/main/res/layout/activity_nickname_setting.xml" value="0.31354166666666666" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1122_ui_ver3/app/src/main/res/layout/activity_start.xml" value="0.31354166666666666" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1122_ui_ver3/app/src/main/res/layout/frag_login.xml" value="0.31354166666666666" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/layout/activity_nickname.xml" value="0.2695035460992908" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/layout/frag_login.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/layout/frag_mypage.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/layout/list_item.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/layout/notification.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/layout/rank_listview.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/layout/rating_dialog.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/layout/toast_chal_join_complete.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/menu/bottom_menu.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/menu/chal_write_menu.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/menu/menu_frag_df.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/menu/menu_frag_hm.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/menu/menu_frag_rk.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/menu/menu_frag_st.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1125_ver1/app/src/main/res/menu/menu_settings.xml" value="0.31302083333333336" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1129_ver1/app/src/main/res/layout/activity_chal_listview.xml" value="0.18931159420289856" />
+        <entry key="..\:/Users/Chaerin/AndroidStudioProjects/Dolfin_1129_ver1/app/src/main/res/layout/frag_hm_category_chal.xml" value="0.18931159420289856" />
+        <entry key="..\:/Users/Choi/AndroidStudioProjects/Dolfin_1117_ui_ver2/app/src/main/res/layout/frag_mypage.xml" value="0.25" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_/app/src/main/res/layout/activity_chal_listview.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_/app/src/main/res/layout/frag_hm_category.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_/app/src/main/res/layout/frag_hm_category_add.xml" value="0.1" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/activity_chal_listview.xml" value="0.264" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/activity_custom.xml" value="0.253125" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/activity_list_layout.xml" value="0.253125" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/activity_main.xml" value="0.253125" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/activity_start.xml" value="0.253125" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/calendar.xml" value="0.1" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/dialog_chal_join.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/frag_chal_calendar.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/frag_df_chal.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/frag_df_chal_write.xml" value="0.1852355072463768" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/frag_dolfin.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/frag_hm_category.xml" value="0.1125" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/frag_hm_category_chal.xml" value="0.2" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/frag_hm_exercise.xml" value="0.264" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/frag_hm_exercise_add.xml" value="0.1852355072463768" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/frag_hm_exercise_chal.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/frag_home.xml" value="0.15965092402464065" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/frag_my_badge.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/frag_my_calender.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/frag_mypage.xml" value="0.4" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/notification.xml" value="0.15353260869565216" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1117_ui/app/src/main/res/layout/toast_chal_join_complete.xml" value="0.1125" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1121_ui_ver1/app/src/main/res/layout/activity_feed_listview.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1121_ui_ver1/app/src/main/res/layout/frag_df_chal.xml" value="0.12310030395136778" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1121_ui_ver1/app/src/main/res/layout/frag_dolfin.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1122_ui_ver4/app/src/main/res/layout/frag_mypage.xml" value="0.1671875" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1124_ver1/app/src/main/res/layout/activity_feed_listview.xml" value="0.1" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/font/font.xml" value="0.28020833333333334" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/layout/activity_chal_listview.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/layout/activity_feed_listview.xml" value="0.253125" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/layout/frag_chal_calendar.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/layout/frag_df_chal_write.xml" value="0.25729166666666664" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/layout/frag_hm_category_chal.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/layout/frag_home.xml" value="0.17028985507246377" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/layout/frag_mypage.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/menu/bottom_menu.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/menu/chal_write_menu.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/menu/menu_frag_df.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/menu/menu_frag_hm.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/menu/menu_frag_rk.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/menu/menu_frag_st.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1129_ver2/app/src/main/res/menu/menu_settings.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1130_ver2/app/src/main/res/layout/frag_df_chal_write.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/DLDBW/AndroidStudioProjects/Dolfin_1130_ver2/app/src/main/res/layout/frag_rank.xml" value="0.1897644927536232" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
