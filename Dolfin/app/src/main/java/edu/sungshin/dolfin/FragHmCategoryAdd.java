@@ -35,15 +35,18 @@ import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -81,6 +84,8 @@ public class FragHmCategoryAdd extends Fragment implements onBackPressedListener
         String email = gsa.getEmail();
 
 
+
+
         category = (TextView) view.findViewById(R.id.category);
         name = (EditText) view.findViewById(R.id.name);
         cnt = (TextView) view.findViewById(R.id.cnt);
@@ -97,6 +102,71 @@ public class FragHmCategoryAdd extends Fragment implements onBackPressedListener
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         actionBar.setTitle("챌린지 만들기");
         actionBar.setDisplayHomeAsUpEnabled(false);
+
+        //
+        // 날짜 관련 변수 추가
+//        Date currentDate; // 현재날짜 Date
+//        //String oTime = ""; // 현재날짜
+//        String compareVal = "N";
+//        SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yy년 MM월 dd일", Locale.KOREA );
+//        Date currentTime = new Date();
+//        String oTime = mSimpleDateFormat.format ( currentTime ); //현재시간 (String)
+        //currentDate =  mSimpleDateFormat.format( oTime );
+        //String end_dates = db.collection("challenges").
+        //DocumentReference d = db.collection("challenges").get().getResult();
+//        Task<DocumentSnapshot> task = null;
+//        assert task != null;
+//        DocumentSnapshot dd = task.getResult();
+//        String end_dated = dd.getData().get("end_date").toString();
+        //String end_dates = db.collection("challenges").get().toString();
+
+        // 추가) 완료 챌린지 카운트(end_date 기준으로 구분)
+//        db.collection("challenges").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if(task.isSuccessful()){
+//                    for(QueryDocumentSnapshot document : task.getResult()){
+//                        DocumentReference docRef = db.collection("challenges").document(document.getId());
+//                        String a = document.get("end_date").toString();
+//                        int compare = oTime.compareTo( a ); // 날짜비교
+//                        if (compare>0){
+//                            //Log.d(TAG, "&&&&&&&&&&&&완료된 챌린지&&&&&&&&&&&&&", task.getException());
+//                            docRef.update("finished", true);
+//                            Log.d(TAG, "%%%%%%%%%%%%%%%%"+a, task.getException());
+//                        }
+//                        //intro_view.setText((String)document.get("chal_intro"));
+//                    }
+//                }else{
+//                    Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
+//                    //Log.d(TAG, "Error getting documents: ", task.getException());
+//                }
+//            }
+//        });
+//        db.collection("challenges")
+//                .whereEqualTo("end_date",end_date)
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if(task.isSuccessful()){
+//                            for(QueryDocumentSnapshot document : task.getResult()){
+//                                int compare = oTime.compareTo( end_date); // 날짜비교
+//                                if (compare>0){
+//                                    DocumentReference docRef = db.collection("challenges").document(document.getId());
+//                                    docRef.update("finished", true);
+//                                    Log.d(TAG, "&&&&&&&&&&&&완료된 챌린지&&&&&&&&&&&&&", task.getException());
+//                                }
+//
+//                                //intro_view.setText((String)document.get("chal_intro"));
+//
+//                            }
+//                        }else{
+//                            Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
+//                            //Log.d(TAG, "Error getting documents: ", task.getException());
+//                        }
+//                    }
+//                });
+        //
 
         // 카테고리 버튼 이벤트
         button1.setOnClickListener(new View.OnClickListener() {
@@ -198,6 +268,10 @@ public class FragHmCategoryAdd extends Fragment implements onBackPressedListener
                 ArrayList<String> member_list = new ArrayList<>();
 
 
+
+
+
+
                 if((categoryI==0)||(nameI==0)||(cntL==0)||(termI==0)||(introI==0)||(numL==0)){
                     //Toast.makeText(getApplicationContext(),"모두 입력해주세요",Toast.LENGTH_SHORT).show();
                     Toast.makeText(getActivity(),"모두 입력해주세요",Toast.LENGTH_SHORT).show();
@@ -232,6 +306,49 @@ public class FragHmCategoryAdd extends Fragment implements onBackPressedListener
                                 challenges.put("member_num", 1);
                                 challenges.put("finished", false);
                                 challenges.put("member_email", member_list);
+
+//                                // 날짜 관련 변수 추가
+//                                Date currentDate; // 현재날짜 Date
+//
+//                                //String oTime = ""; // 현재날짜
+//
+//                                String compareVal = "N";
+//                                SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yy년 MM월 dd일", Locale.KOREA );
+//
+//                                Date currentTime = new Date();
+//
+//                                String oTime = mSimpleDateFormat.format ( currentTime ); //현재시간 (String)
+//
+//                                //currentDate =  mSimpleDateFormat.format( oTime );
+//
+//
+//                                int compare = oTime.compareTo( end_dateS ); // 날짜비교
+//
+//                                // 추가) 완료 챌린지 카운트(end_date 기준으로 구분)
+//                                db.collection("challenges")
+//                                        .whereEqualTo("end_date",end_dateS)
+//                                        .get()
+//                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                                                if(task.isSuccessful()){
+//                                                    for(QueryDocumentSnapshot document : task.getResult()){
+//                                                        if (compare>0){
+//                                                            DocumentReference docRef = db.collection("challenges").document(document.getId());
+//                                                            docRef.update("finished", true);
+//                                                            Log.d(TAG, "&&&&&&&&&&&&완료된 챌린지&&&&&&&&&&&&&", task.getException());
+//                                                        }
+//
+//                                                        //intro_view.setText((String)document.get("chal_intro"));
+//
+//                                                    }
+//                                                }else{
+//                                                    Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
+//                                                    //Log.d(TAG, "Error getting documents: ", task.getException());
+//                                                }
+//                                            }
+//                                        });
+                                //
 
                                 db.collection("users")
                                         .whereEqualTo("gmail", email)
@@ -277,6 +394,10 @@ public class FragHmCategoryAdd extends Fragment implements onBackPressedListener
                 }
             }
         });
+
+
+
+
 
         return view;
     }

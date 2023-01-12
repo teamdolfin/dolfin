@@ -1,7 +1,10 @@
 package edu.sungshin.dolfin;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,8 +38,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Field;
 import java.sql.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import edu.sungshin.dolfin.databinding.FragDolfinBinding;
 
@@ -45,16 +51,16 @@ public class FragDolfin extends Fragment implements  onBackPressedListener {
     // (추가) 뒤로가기 관련 변수 추가
     private final long finishtimeed = 1000;
     private long presstime = 0;
-
+    //
     private View view;
     private ListView list;
-
     private FragDolfinBinding mBinding;
     //private FragmentManager fm;
     //private FragmentTransaction ft;
     GoogleSignInClient mGoogleSignInClient;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<String> chal_list = new ArrayList<>();
+    ArrayList<String> chal_list2 = new ArrayList<>(); ///////추가)
 
 
     @Nullable
@@ -64,18 +70,12 @@ public class FragDolfin extends Fragment implements  onBackPressedListener {
         //뷰 바인딩
         mBinding = FragDolfinBinding.inflate(getLayoutInflater());
         View view = mBinding.getRoot();
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail() // email addresses도 요청함
-                .build();
-
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build(); // email addresses도 요청함
         // 위에서 만든 GoogleSignInOptions을 사용해 GoogleSignInClient 객체를 만듬
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
-
         // 기존에 로그인 했던 계정을 확인한다.
         GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(getActivity());
         String email = gsa.getEmail();
-
         //메뉴 활성화
         setHasOptionsMenu(true);
 
@@ -86,14 +86,35 @@ public class FragDolfin extends Fragment implements  onBackPressedListener {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         chal_list.clear();
+                        chal_list2.clear(); ///////추가)
                         System.out.println("******************" + "들어갔니" + "*******************");
                         if(task.isSuccessful()){
                             for(QueryDocumentSnapshot document : task.getResult()){
                                 //DocumentReference docRef = db.collection("challenges").document(document.getId());
                                 System.out.println("=================" + document.get("chal_name"));
                                 //chal_list = ((ArrayList<String>)documentt.get("my_chal"));
-                                chal_list.add((String)document.get("chal_name"));
-                                System.out.println("=================" + chal_list);
+
+                                ///////추가) finish challenge 완료된 챌린지에 보이게 / 진행중에서 안보이게
+                                String end = document.get("end_date").toString();
+                                SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yy년 MM월 dd일", Locale.KOREA );
+                                Date currentTime = new Date();
+                                String oTime = mSimpleDateFormat.format ( currentTime );
+                                int compare = oTime.compareTo( end );
+                                if (compare<=0){
+                                    chal_list.add((String)document.get("chal_name"));
+                                    //adapter.notifyDataSetChanged();
+                                    System.out.println("=================" + chal_list);
+                                }
+                                else{
+                                    chal_list2.add((String)document.get("chal_name"));
+                                    System.out.println("=================" + chal_list2);
+                                    //Log.d(TAG, "/////////////////////추가", task.getException());
+                                }
+
+                                //chal_list.add((String)document.get("chal_name"));
+                                //System.out.println("=================" + chal_list);
+
+                                ///////
                             }
                         }else{
                             Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
@@ -103,18 +124,15 @@ public class FragDolfin extends Fragment implements  onBackPressedListener {
                 });
 
 
+        //진행 중인 리스트 뷰
         list = view.findViewById(R.id.list1);
         List<String> data1 = new ArrayList<>();
-
         list.setAdapter(new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_dropdown_item_1line,data1));
         System.out.println("***************************" + data1 + "**************************");
-
         data1.addAll(chal_list);
 
 
-
         //각 버튼 클릭시 이동화면
-        // 1) 3km 걷기 챌린지
         mBinding.list1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent,View view, int position,long id) {
@@ -136,24 +154,22 @@ public class FragDolfin extends Fragment implements  onBackPressedListener {
             }
         });
 
-
-        //진행 중인 리스트 뷰
-
-
         //완료된 리스튜 뷰
         list = view.findViewById(R.id.list2);
         List<String> data2 = new ArrayList<>();
         list.setAdapter(new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_dropdown_item_1line,data2));
+        data2.addAll(chal_list2); ///////추가)
 
-        data2.add("ㄱ 챌린지");
-        data2.add("ㄴ 챌린지");
-        data2.add("ㄷ 챌린지");
-        data2.add("ㄹ 챌린지");
-        data2.add("ㅁ 챌린지");
-        data2.add("ㅂ 챌린지");
-        data2.add("ㅅ 챌린지");
-        data2.add("ㅇ 챌린지");
-        data2.add("ㅈ 챌린지");
+///////추가)
+//        data2.add("ㄱ 챌린지");
+//        data2.add("ㄴ 챌린지");
+//        data2.add("ㄷ 챌린지");
+//        data2.add("ㄹ 챌린지");
+//        data2.add("ㅁ 챌린지");
+//        data2.add("ㅂ 챌린지");
+//        data2.add("ㅅ 챌린지");
+//        data2.add("ㅇ 챌린지");
+//        data2.add("ㅈ 챌린지");
 
 
         //완료한 챌린지, 끝난 챌린지 탭 호스트
@@ -212,10 +228,7 @@ public class FragDolfin extends Fragment implements  onBackPressedListener {
             FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
             fm.replace(R.id.main_frame ,fragment).commit();
         }
-
          */
-
-
         return super.onOptionsItemSelected(item);
     }
 
