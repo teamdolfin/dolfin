@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_nickname"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/tv_email"
+        android:hint="사용자 email 출력"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/tv_hello"
+        android:text="@string/tv_hello"
+        android:gravity="center"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_nicknameSetting"
+        android:background="@color/bluegrotto"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:hint="닉네임을 입력하시오"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_nickname_overlap"
+        android:text="중복된 이름입니다."
+        android:visibility="invisible"
+        android:layout_gravity="right"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:id="@+id/btn_nicknameSetting"
+        android:background="@color/babyblue"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:text="완료"
+
+        />
+
+</LinearLayout>

@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">Dolfin</string>
+    //4 Button- 4 Fragments
+    <string name="strImgHome">Home</string>
+    <string name="strImgRank">Rank</string>
+    <string name="strImgDolfin">MyPage</string>
+    <string name="strImgSetting">Setting</string>
+    //MENU(오른쪽 상단)
+    <string name="menuAlarm">알림설정</string>
+    <string name="menuLogout">로그아웃</string>
+
+    //----- HOME
+    <string name="btn_home_exercise">운동</string>
+    <string name="btn_home_health">건강</string>
+    <string name="btn_home_book">독서</string>
+    <string name="btn_home_money">금융</string>
+    <string name="btn_home_hobby">취미</string>
+    <string name="btn_home_study">공부</string>
+    //ㄴ category 선택시
+    <string name="textCategory">카테고리 표시</string>
+    <string name="btnChal1">ㄱ챌린지</string>
+    <string name="btnChal2">ㄴ챌린지</string>
+    <string name="btnChal3">ㄷ챌린지</string>
+    //ㄴ 챌린지 가입 전
+    <string name="btnChalName">챌린지명</string>
+    <string name="btnChalIntro">소개</string>
+    <string name="btnChalNum">인원수</string>
+    <string name="btnChalJoin">가입하기</string>
+    //----- RANK
+    <string name="btn_rank_exercise">운동</string>
+    <string name="btn_rank_health">건강</string>
+    <string name="btn_rank_book">독서</string>
+    <string name="btn_rank_money">금융</string>
+    <string name="btn_rank_hobby">취미</string>
+    <string name="btn_rank_study">공부</string>
+    //----- Dolfin
+    <string name="btnMyChal1">3km 걷기 챌린지</string>
+    <string name="btnMyChal2">ㄱ챌린지</string>
+    <string name="btnMyChal3">ㄴ챌린지</string>
+    <string name="btnMyChal4">ㄷ챌린지</string>
+    <string name="btnMyChal5">ㄹ챌린지</string>
+    <string name="btnMyChal6">ㅁ챌린지</string>
+    <string name="btnMyChal7">ㅂ챌린지</string>
+    <string name="btnMyChal8">ㅅ챌린지</string>
+    <string name="btnMyChal9">ㅇ챌린지</string>
+    <string name="btnMyChal10">ㅈ챌린지</string>
+    <string name="btnMyChal11">ㅊ챌린지</string>
+    <string name="btnMyChal12">ㅋ챌린지</string>
+    <string name="btnMyChal13">ㅌ챌린지</string>
+    // ㄴ 챌린지 info
+    <string name="btnChalMyName">챌린지명</string>
+    <string name="btnChalMyIntro">소개</string>
+    <string name="btnChalMyNum">인원수</string>
+    <string name="btnChalOut">탈퇴</string>
+    <string name="btnChalCalender">달력</string>
+    <string name="btnChalWrite">글작성</string>
+    // ㄴ 챌린지 글 작성
+    <string name="btnWriteFile">파일첨부</string>
+    <string name="btnWriteUpload">등록하기</string>
+    //----- MyPage
+    <string name="btnMyNickname">닉네임</string>
+    <string name="btnMyGmail">지메일</string>
+    <string name="btnMyPoint">포인트</string>
+    <string name="btnMyCalender">나의 달력</string>
+    <string name="btnMyBadge">나의 뱃지</string>
+    <string name="dolfinExit">앱 탈퇴하기</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    //닉네임 설정창 인사말
+    <string name="tv_hello">만나서 반갑습니다\n 저희 어플은 처음이시군요!\n저희와 함께하고 싶으시다면\n닉네임을 설정해주세요!</string>
+</resources>
