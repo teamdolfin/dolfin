@@ -44,6 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -97,6 +98,36 @@ public class FragHmCategoryAdd extends Fragment implements onBackPressedListener
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         actionBar.setTitle("챌린지 만들기");
         actionBar.setDisplayHomeAsUpEnabled(false);
+
+        // 날짜 관련 변수 추가
+        SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yy년 MM월 dd일", Locale.KOREA );
+        Date currentTime = new Date();
+        String oTime = mSimpleDateFormat.format ( currentTime ); //현재시간 (String)
+
+
+        // 추가) 완료 챌린지 카운트(end_date 기준으로 구분)
+        db.collection("challenges").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        DocumentReference docRef = db.collection("challenges").document(document.getId());
+                        String a = document.get("end_date").toString();
+                        int compare = oTime.compareTo( a ); // 날짜비교
+                        if (compare>0){
+                            //Log.d(TAG, "&&&&&&&&&&&&완료된 챌린지&&&&&&&&&&&&&", task.getException());
+                            docRef.update("finished", true);
+                            Log.d(TAG, "%%%%%%%%%%%%%%%%"+a, task.getException());
+                        }
+
+                    }
+                }else{
+                    Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
+                    //Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+
 
         // 카테고리 버튼 이벤트
         button1.setOnClickListener(new View.OnClickListener() {
