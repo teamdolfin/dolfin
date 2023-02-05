@@ -126,7 +126,20 @@ public class FragDfChal extends Fragment implements  onBackPressedListener{
                                 item.setmyachieve(document.get("percentage").toString());
                                 item.setfeedtitle(document.get("title").toString());
                                 System.out.println("************************"+document.get("feedname"));
-                                item.setfeedname(document.get("feedname").toString());
+                                String email = document.get("feedname").toString();
+                                db.collection("users").whereEqualTo("gmail", email)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if(task.isSuccessful()){
+                                                    for(QueryDocumentSnapshot documentt : task.getResult()){
+                                                        item.setfeedname(documentt.get("nickname").toString());
+                                                    }
+                                                }
+                                            }
+                                        });
+                                //item.setfeedname(document.get("feedname").toString());
                                 item.setfeeddate(document.get("feeddate").toString());
                                 Uri path = Uri.parse(document.get("file").toString());
                                 item.setimage(path);
@@ -285,6 +298,9 @@ public class FragDfChal extends Fragment implements  onBackPressedListener{
             public void onClick(View view) {
 
                 Fragment fragment = new ChalWriteActivity();
+                Bundle bundle = new Bundle();
+                bundle.putString("chal_name_check", chal_name);
+                fragment.setArguments(bundle);
                 FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
                 fm.replace(R.id.main_frame, fragment).commit();
 

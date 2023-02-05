@@ -51,6 +51,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.OnProgressListener;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -87,6 +88,7 @@ public class ChalWriteActivity extends Fragment implements onBackPressedListener
     long mNow;
     Date mDate;
     SimpleDateFormat mFormat = new SimpleDateFormat("yy년 MM월 dd일");
+    String chal_name;
 
 
 
@@ -115,6 +117,12 @@ public class ChalWriteActivity extends Fragment implements onBackPressedListener
         String email = gsa.getEmail();
         //System.out.println("**********************"+email);
 
+        Bundle bundle = getArguments();
+
+        if(bundle != null){
+            chal_name = bundle.getString("chal_name_check");
+        }
+
 
         // 파일 업로드 필수 지정
         btnWriteUpload.setOnClickListener(new View.OnClickListener() {
@@ -132,8 +140,8 @@ public class ChalWriteActivity extends Fragment implements onBackPressedListener
                     post.put("percentage", rate);
                     post.put("file",imageUri.toString());
                     post.put("feeddate", currentdate);
-
                     post.put("feedname",email);
+                    post.put("chal_name", chal_name);
                     db.collection("posts").add(post)
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
@@ -145,6 +153,20 @@ public class ChalWriteActivity extends Fragment implements onBackPressedListener
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Log.w(TAG, "Error writing document", e);
+                                }
+                            });
+                    db.collection("users").whereEqualTo("gmail", email)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(task.isSuccessful()){
+                                        for(QueryDocumentSnapshot document : task.getResult()){
+                                            DocumentReference docRef = db.collection("users").document(document.getId());
+                                            docRef.update("user_point", FieldValue.increment(1));
+
+                                        }
+                                    }
                                 }
                             });
 
@@ -200,6 +222,10 @@ public class ChalWriteActivity extends Fragment implements onBackPressedListener
 
 
                     Fragment fragment = new FragDfChal();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("chal_name_check", chal_name);
+
+                    fragment.setArguments(bundle);
                     FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
                     fm.replace(R.id.main_frame ,fragment).commit();
                     //Toast.makeText(getActivity().getApplicationContext(), "Fragment전환됨", Toast.LENGTH_SHORT).show();
@@ -378,30 +404,42 @@ public class ChalWriteActivity extends Fragment implements onBackPressedListener
     }
 
     // 파일 보여주는 기능
+    /// 추가) 글 작성 시 파일 업로드 들어갔다가 뒤로가기 누르면 오류뜨면서 튕김 해결
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
             case 1:
-                imageUri = data.getData();
-                if (resultCode == RESULT_OK) {
-                    imageView.setVisibility(android.view.View.VISIBLE);
-                    videoView.setVisibility(android.view.View.INVISIBLE);
-                    imageView.setImageURI(imageUri);
+                try{
+                    imageUri = data.getData();
+                    if (resultCode == RESULT_OK) {
+                        imageView.setVisibility(View.VISIBLE);
+                        videoView.setVisibility(View.INVISIBLE);
+                        imageView.setImageURI(imageUri);
+                    }
+                    break;
+                }catch (NullPointerException e){
+                    Log.d(TAG, "Error : ", e);
                 }
-                break;
-            case 2:
-                imageUri = data.getData();
-                if (resultCode == RESULT_OK) {
-                    videoView.setVisibility(android.view.View.VISIBLE);
-                    imageView.setVisibility(android.view.View.INVISIBLE);
-                    videoView.setVideoURI(imageUri);
-                    videoView.start();
-                }
-                break;
-        }
 
+            case 2:
+                try {
+                    imageUri = data.getData();
+                    if (resultCode == RESULT_OK) {
+                        videoView.setVisibility(View.VISIBLE);
+                        imageView.setVisibility(View.INVISIBLE);
+                        videoView.setVideoURI(imageUri);
+                        videoView.start();
+                    }
+                    break;
+                }catch (NullPointerException e){
+                    Log.d(TAG, "Error : ", e);
+                }
+        }
+//            default:
+//                throw new IllegalStateException("Unexpected value: " + requestCode);
     }
+    ///
 
     //firestore에 이미지 저장
     private void uploadToFirebase(Uri uri) {
