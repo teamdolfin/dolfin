@@ -113,7 +113,6 @@ public class FragHmCategoryChal extends Fragment implements onBackPressedListene
             case R.id.btnChalJoin:
                 GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(getActivity());
                 String email = gsa.getEmail();
-
                 Bundle bundle = getArguments();
 
 
@@ -132,7 +131,26 @@ public class FragHmCategoryChal extends Fragment implements onBackPressedListene
                                         DocumentReference docRef = db.collection("challenges").document(documentt.getId());
                                         System.out.println("=================" + documentt.getData());
                                         docRef.update("member_email", FieldValue.arrayUnion(email));
-                                        docRef.update("member_num", (Long)documentt.get("member_num") + 1);
+
+                                        /// 추가) max 인원
+                                        Long mem_num = (Long) documentt.get("member_num") + 1;
+                                        if(mem_num-1< (Long)documentt.get("member_max")){
+                                            docRef.update("member_num", mem_num);
+
+                                            //데이터를 다이얼로그로 보냄
+                                            Bundle args = new Bundle();
+                                            args.putString("key", "value");
+                                            //-----------------------------------//
+                                            FragDialogChalJoin dialog = new FragDialogChalJoin();
+                                            dialog.setArguments(args);
+                                            dialog.show(getActivity().getSupportFragmentManager(),"tag");
+                                        }
+
+                                        else if(mem_num-1>= (Long)documentt.get("member_max")){
+                                            Toast.makeText(getActivity()," 챌린지 인원이 많아 가입이 어렵습니다. 다음에 다시 시도해주세요.",Toast.LENGTH_SHORT).show();
+                                        }
+                                        //docRef.update("member_num", mem_num);
+                                        ///
 
                                     }
                                 }else{
@@ -154,6 +172,8 @@ public class FragHmCategoryChal extends Fragment implements onBackPressedListene
                                         System.out.println("=================" + documentt.getData());
                                         docRef.update("my_chal", FieldValue.arrayUnion(chal_name));
 
+
+
                                     }
                                 }else{
                                     Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
@@ -162,13 +182,14 @@ public class FragHmCategoryChal extends Fragment implements onBackPressedListene
                             }
                         });
 
-                //데이터를 다이얼로그로 보냄
-                Bundle args = new Bundle();
-                args.putString("key", "value");
-                //-----------------------------------//
-                FragDialogChalJoin dialog = new FragDialogChalJoin();
-                dialog.setArguments(args);
-                dialog.show(getActivity().getSupportFragmentManager(),"tag");
+//                //데이터를 다이얼로그로 보냄
+//                Bundle args = new Bundle();
+//                args.putString("key", "value");
+//                //-----------------------------------//
+//                FragDialogChalJoin dialog = new FragDialogChalJoin();
+//                dialog.setArguments(args);
+//                dialog.show(getActivity().getSupportFragmentManager(),"tag");
+
                 break;
                /* GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(getActivity());
                 String email = gsa.getEmail();
