@@ -16,6 +16,7 @@
     <string name="btn_home_money">금융</string>
     <string name="btn_home_hobby">취미</string>
     <string name="btn_home_study">공부</string>
+    <string name="btnChalMove">이동하기</string>
     //ㄴ category 선택시
     <string name="textCategory">카테고리 표시</string>
     <string name="btnChal1">ㄱ챌린지</string>

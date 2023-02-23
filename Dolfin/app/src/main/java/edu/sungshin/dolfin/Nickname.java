@@ -131,6 +131,7 @@ public class Nickname extends AppCompatActivity {
                                             });
                                             Intent intent1 = new Intent(Nickname.this, MainActivity.class);
                                             startActivity(intent1);
+                                            finish();
 
                                         }
                                         else {

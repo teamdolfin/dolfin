@@ -35,13 +35,17 @@ import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.Locale;
 
 public class FragHmBook extends Fragment implements onBackPressedListener {
 
@@ -108,6 +112,34 @@ public class FragHmBook extends Fragment implements onBackPressedListener {
 
          */
         adapter = new chal_listview(itemList);
+
+        ///////추가) 완료 챌린지 카운트(end_date 기준으로 구분) : 완료는 true로 변경
+        SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yy년 MM월 dd일", Locale.KOREA );
+        Date currentTime = new Date();
+        String oTime = mSimpleDateFormat.format ( currentTime ); //현재시간 (String)
+        db.collection("challenges").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        DocumentReference docRef = db.collection("challenges").document(document.getId());
+                        String a = document.get("end_date").toString();
+                        int compare = oTime.compareTo( a ); // 날짜비교
+                        if (compare>0){
+                            //Log.d(TAG, "&&&&&&&&&&&&완료된 챌린지&&&&&&&&&&&&&", task.getException());
+                            docRef.update("finished", true);
+                            Log.d(TAG, "%%%%%%%%%%%%%%%%"+a, task.getException());
+                        }
+                        //intro_view.setText((String)document.get("chal_intro"));
+                    }
+                }else{
+                    Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
+                    //Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+        ///////
+
         db.collection("challenges").whereEqualTo("category","독서")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -127,9 +159,25 @@ public class FragHmBook extends Fragment implements onBackPressedListener {
                                 item.setEnd(document.get("end_date").toString());
                                 item.setCnt(Math.toIntExact((Long) document.get("count_week")));
 
-                                itemList.add(item);
-                                System.out.println(challenges.getName() + challenges.getEnd());
-                                adapter.notifyDataSetChanged();
+                                ///////추가) finish challenge 챌린지 리스트에서 안보이게 하기
+                                String end = document.get("end_date").toString();
+                                SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yy년 MM월 dd일", Locale.KOREA );
+                                Date currentTime = new Date();
+                                String oTime = mSimpleDateFormat.format ( currentTime );
+                                int compare = oTime.compareTo( end );
+                                if (compare<0){
+                                    itemList.add(item);
+                                    adapter.notifyDataSetChanged();
+                                }
+                                else{
+                                    Log.d(TAG, "/////////////////////추가", task.getException());
+                                }
+
+
+                                //itemList.add(item);
+                                //System.out.println(challenges.getName() + challenges.getEnd());
+                                //adapter.notifyDataSetChanged();
+                                ///////
                             }
                         }
                         else{

@@ -79,6 +79,7 @@ public class Start extends AppCompatActivity {
         if(gsa != null){
             Intent intent = new Intent(Start.this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
 
         StartBtn = findViewById(R.id.start_Btn);
@@ -90,6 +91,7 @@ public class Start extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Start.this, Login.class);
                 startActivity(intent);
+                finish();
 
             }
         });

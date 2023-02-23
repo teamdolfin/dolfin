@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements onBackPressedList
         long tempTime = System.currentTimeMillis();
         long intervalTime = tempTime - presstime;
 
-        if (0 <= intervalTime && finishtimeed >= intervalTime)
+        /*if (0 <= intervalTime && finishtimeed >= intervalTime)
         {
             finishAffinity();
         }
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements onBackPressedList
         {
             presstime = tempTime;
             Toast.makeText(MainActivity.this, "한번더 누르시면 앱이 종료됩니다", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
 
         List<Fragment> fragmentList = getSupportFragmentManager().getFragments();

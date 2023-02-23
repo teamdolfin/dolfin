@@ -112,6 +112,7 @@ public class FragDfChal extends Fragment implements  onBackPressedListener{
         adapter10 = new feed_listview(itemList10);
 
         db.collection("posts")
+                .whereEqualTo("chal_name", chal_name)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -126,7 +127,20 @@ public class FragDfChal extends Fragment implements  onBackPressedListener{
                                 item.setmyachieve(document.get("percentage").toString());
                                 item.setfeedtitle(document.get("title").toString());
                                 System.out.println("************************"+document.get("feedname"));
-                                item.setfeedname(document.get("feedname").toString());
+                                String email = document.get("feedname").toString();
+                                db.collection("users").whereEqualTo("gmail", email)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if(task.isSuccessful()){
+                                                    for(QueryDocumentSnapshot documentt : task.getResult()){
+                                                        item.setfeedname(documentt.get("nickname").toString());
+                                                    }
+                                                }
+                                            }
+                                        });
+                                //item.setfeedname(document.get("feedname").toString());
                                 item.setfeeddate(document.get("feeddate").toString());
                                 Uri path = Uri.parse(document.get("file").toString());
                                 item.setimage(path);
@@ -201,7 +215,7 @@ public class FragDfChal extends Fragment implements  onBackPressedListener{
                             chal_name = bundle.getString("chal_name_check");
                         }
 
-                        db.collection("user")
+                        db.collection("users")
                                 .whereEqualTo("gmail", email)
                                 .get()
                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -209,7 +223,7 @@ public class FragDfChal extends Fragment implements  onBackPressedListener{
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if(task.isSuccessful()){
                                             for(QueryDocumentSnapshot document : task.getResult()){
-                                                DocumentReference docRef = db.collection("user").document(document.getId());
+                                                DocumentReference docRef = db.collection("users").document(document.getId());
                                                 docRef.update("my_chal", FieldValue.arrayRemove((String)chal_name));
                                             }
                                         }else{
@@ -219,7 +233,7 @@ public class FragDfChal extends Fragment implements  onBackPressedListener{
                                     }
                                 });
 
-                        db.collection("challenge")
+                        db.collection("challenges")
                                 .whereEqualTo("chal_name", chal_name)
                                 .get()
                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -227,8 +241,9 @@ public class FragDfChal extends Fragment implements  onBackPressedListener{
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if(task.isSuccessful()){
                                             for(QueryDocumentSnapshot document : task.getResult()){
-                                                DocumentReference docRef = db.collection("chal_name").document(document.getId());
-                                                docRef.update("member_email", FieldValue.arrayRemove(email));
+                                                DocumentReference docRef = db.collection("challenges").document(document.getId());
+                                                docRef.update("member_email", FieldValue.arrayRemove((String)email));
+                                                docRef.update("member_num", FieldValue.increment(-1));
                                             }
                                         }else{
                                             Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
@@ -285,6 +300,9 @@ public class FragDfChal extends Fragment implements  onBackPressedListener{
             public void onClick(View view) {
 
                 Fragment fragment = new ChalWriteActivity();
+                Bundle bundle = new Bundle();
+                bundle.putString("chal_name_check", chal_name);
+                fragment.setArguments(bundle);
                 FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
                 fm.replace(R.id.main_frame, fragment).commit();
 

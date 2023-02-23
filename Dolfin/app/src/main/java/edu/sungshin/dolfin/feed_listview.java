@@ -72,7 +72,7 @@ public class feed_listview extends BaseAdapter {
         feedTitle.setText(listViewItem.getfeedtitle());
         feedName.setText(listViewItem.getfeedname());
         feedDate.setText(listViewItem.getfeeddate());
-        feedImage.setImageURI(listViewItem.getimage());
+        //feedImage.setImageURI(listViewItem.getimage());
         //feedvideo.setVideoURI(listViewItem.getvideo());
         feedContents.setText(listViewItem.getfeedcontents());
         feedDelete.setText(listViewItem.getfeeddelete());

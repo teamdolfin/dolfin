@@ -40,6 +40,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -159,64 +160,64 @@ public class FragMyPage extends Fragment implements onBackPressedListener{
                                     Toast.makeText(getActivity(), "한글자 이상 입력해 주세요", Toast.LENGTH_SHORT).show();
 
                                 } else {
-                                db.collection("users")
-                                        .whereEqualTo("nickname", value)
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if (task.isSuccessful()) {
-                                                    if (task.getResult().size() <= 0) {
-                                                        db.collection("users")
-                                                                .whereEqualTo("gmail", email)
-                                                                .get()
-                                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                                    @Override
-                                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                        if(task.isSuccessful()){
-                                                                            for(QueryDocumentSnapshot documentt : task.getResult()){
+                                    db.collection("users")
+                                            .whereEqualTo("nickname", value)
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        if (task.getResult().size() <= 0) {
+                                                            db.collection("users")
+                                                                    .whereEqualTo("gmail", email)
+                                                                    .get()
+                                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                            if(task.isSuccessful()){
+                                                                                for(QueryDocumentSnapshot documentt : task.getResult()){
 
-                                                                                DocumentReference docRef = db.collection("users").document(documentt.getId());
-                                                                                docRef.update("nickname", value);
-                                                                                nickname.setText(value);
+                                                                                    DocumentReference docRef = db.collection("users").document(documentt.getId());
+                                                                                    docRef.update("nickname", value);
+                                                                                    nickname.setText(value);
 
-                                                                                Fragment fragment = new FragMyPage();
-                                                                                FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-                                                                                fm.replace(R.id.main_frame ,fragment).commit();
+                                                                                    Fragment fragment = new FragMyPage();
+                                                                                    FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+                                                                                    fm.replace(R.id.main_frame ,fragment).commit();
 
-                                                                                Toast.makeText(getContext(), "닉네임이 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                                                                                    Toast.makeText(getContext(), "닉네임이 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                                                                                }
+                                                                            }else{
+                                                                                Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
+                                                                                //Log.d(TAG, "Error getting documents: ", task.getException());
                                                                             }
-                                                                        }else{
-                                                                            Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
-                                                                            //Log.d(TAG, "Error getting documents: ", task.getException());
                                                                         }
-                                                                    }
-                                                                });
-                                                    } else {
-                                                        Toast.makeText(getActivity(), "닉네임이 중복되었습니다.", Toast.LENGTH_SHORT).show();
+                                                                    });
+                                                        } else {
+                                                            Toast.makeText(getActivity(), "닉네임이 중복되었습니다.", Toast.LENGTH_SHORT).show();
+                                                        }
+
                                                     }
-
                                                 }
-                                            }
-                                        });
+                                            });
+                                }
+
                             }
+                        }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Fragment fragment = new FragMyPage();
+                        FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+                        fm.replace(R.id.main_frame ,fragment).commit();
+                        dialogInterface.dismiss();
+                    }
 
-                        }
-                    }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Fragment fragment = new FragMyPage();
-                                FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-                                fm.replace(R.id.main_frame ,fragment).commit();
-                                dialogInterface.dismiss();
-                            }
+                });
 
-                        });
-
-            AlertDialog alert = alt_bld.create();
-            alert.show();
-        }
-    });
+                AlertDialog alert = alt_bld.create();
+                alert.show();
+            }
+        });
 
 
 
@@ -277,73 +278,93 @@ public class FragMyPage extends Fragment implements onBackPressedListener{
         });
 
         // 5) 앱 탈퇴
-    mBinding.dolfinExit.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            final AlertDialog.Builder alt_bld = new AlertDialog.Builder(getContext());
-            alt_bld.setTitle("정말 탈퇴하시겠습니까?")
-                    .setIcon(R.drawable.img_menu_setting)
-                    .setCancelable(false)
-                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            db.collection("posts").whereEqualTo("feedname", email)
-                                    .get()
-                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            if(task.isSuccessful()){
-                                                for(QueryDocumentSnapshot documentt : task.getResult()){
-                                                    DocumentReference documentReference = db.collection("posts").document(documentt.getId());
-                                                    documentReference.delete();
+        mBinding.dolfinExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder alt_bld = new AlertDialog.Builder(getContext());
+                alt_bld.setTitle("정말 탈퇴하시겠습니까?")
+                        .setIcon(R.drawable.img_menu_setting)
+                        .setCancelable(false)
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                db.collection("posts").whereEqualTo("feedname", email)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if(task.isSuccessful()){
+                                                    for(QueryDocumentSnapshot documentt : task.getResult()){
+                                                        DocumentReference documentReference = db.collection("posts").document(documentt.getId());
+                                                        documentReference.delete();
 
+                                                    }
                                                 }
                                             }
-                                        }
-                                    });
+                                        });
+                                db.collection("challenges")
+                                        .whereArrayContains("member_email", email)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if(task.isSuccessful()){
+                                                    for(QueryDocumentSnapshot document : task.getResult()){
+                                                        DocumentReference docRef = db.collection("challenges").document(document.getId());
+                                                        docRef.update("member_email", FieldValue.arrayRemove((String)email));
+                                                        docRef.update("member_num", FieldValue.increment(-1));
+                                                    }
+                                                }else{
+                                                    Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
+                                                    //Log.d(TAG, "Error getting documents: ", task.getException());
+                                                }
+                                            }
+                                        });
 
-                       db.collection("users").whereEqualTo("gmail", email)
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                               for (QueryDocumentSnapshot documentt : task.getResult()) {
 
-                                   DocumentReference docRef = db.collection("users").document(documentt.getId());
-                                   docRef.delete();
+                                db.collection("users").whereEqualTo("gmail", email)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot documentt : task.getResult()) {
 
-                                   GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                           .requestEmail() // email addresses도 요청함
-                                           .build();
-                                   mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+                                                        DocumentReference docRef = db.collection("users").document(documentt.getId());
+                                                        docRef.delete();
+
+                                                        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                                                .requestEmail() // email addresses도 요청함
+                                                                .build();
+                                                        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
 
                             /*FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                             firebaseUser.delete();*/
-                                   FirebaseAuth.getInstance().signOut();
+                                                        FirebaseAuth.getInstance().signOut();
 
-                                   mGoogleSignInClient.signOut();
-                                   Intent intent = new Intent(getActivity(), Start.class);
+                                                        mGoogleSignInClient.signOut();
+                                                        Intent intent = new Intent(getActivity(), Start.class);
 
-                                   startActivity(intent);
+                                                        startActivity(intent);
+                                                        getActivity().finish();
 
-                                   Toast.makeText(getContext(), "탈퇴하였습니다.", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getContext(), "탈퇴하였습니다.", Toast.LENGTH_SHORT).show();
 
+                                                    }
+                                                }
                                             }
-                                        }
-                                     }
-                                 });
+                                        });
 
                             }
-                    }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            AlertDialog alert = alt_bld.create();
-            alert.show();
-        }
-    });
+                        }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog alert = alt_bld.create();
+                alert.show();
+            }
+        });
 
         //액션바
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
@@ -363,7 +384,7 @@ public class FragMyPage extends Fragment implements onBackPressedListener{
 
     }
 
-    
+
 
 
     // (추가) 알림설정 이벤트

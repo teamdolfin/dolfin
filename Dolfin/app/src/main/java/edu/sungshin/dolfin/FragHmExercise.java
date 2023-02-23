@@ -43,10 +43,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import edu.sungshin.dolfin.databinding.FragHmCategoryBinding;
 import edu.sungshin.dolfin.databinding.FragHomeBinding;
@@ -64,10 +67,7 @@ public class FragHmExercise extends Fragment implements  onBackPressedListener {
     Bundle bundle = new Bundle();
     SearchView searchText;
     ArrayList<String> chal_my_list = new ArrayList<>();
-
-
     ArrayList<chal_listview.ListViewItem> itemList = new ArrayList<chal_listview.ListViewItem>();
-
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     GoogleSignInClient mGoogleSignInClient;
 
@@ -79,18 +79,14 @@ public class FragHmExercise extends Fragment implements  onBackPressedListener {
         //뷰 바인딩
         mBinding = FragHmCategoryBinding.inflate(getLayoutInflater());
         View view = mBinding.getRoot();
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail() // email addresses도 요청함
                 .build();
-
         // 위에서 만든 GoogleSignInOptions을 사용해 GoogleSignInClient 객체를 만듬
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
-
         // 기존에 로그인 했던 계정을 확인한다.
         GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(getActivity());
         String email = gsa.getEmail();
-
         //메뉴 활성화
         setHasOptionsMenu(true);
 
@@ -103,9 +99,34 @@ public class FragHmExercise extends Fragment implements  onBackPressedListener {
         FilterBtn = view.findViewById(R.id.FilterBtn);
         searchText = view.findViewById(R.id.searchText);
         listview = view.findViewById(R.id.chal_listview);
-
-
         adapter = new chal_listview(itemList);
+
+        ///////추가) 완료 챌린지 카운트(end_date 기준으로 구분) : 완료는 true로 변경
+        SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yy년 MM월 dd일", Locale.KOREA );
+        Date currentTime = new Date();
+        String oTime = mSimpleDateFormat.format ( currentTime ); //현재시간 (String)
+        db.collection("challenges").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        DocumentReference docRef = db.collection("challenges").document(document.getId());
+                        String a = document.get("end_date").toString();
+                        int compare = oTime.compareTo( a ); // 날짜비교
+                        if (compare>0){
+                            //Log.d(TAG, "&&&&&&&&&&&&완료된 챌린지&&&&&&&&&&&&&", task.getException());
+                            docRef.update("finished", true);
+                            Log.d(TAG, "%%%%%%%%%%%%%%%%"+a, task.getException());
+                        }
+                        //intro_view.setText((String)document.get("chal_intro"));
+                    }
+                }else{
+                    Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
+                    //Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+        ///////
 
         //나의 챌린지 목록 가져오는 코드
         db.collection("users")
@@ -126,8 +147,6 @@ public class FragHmExercise extends Fragment implements  onBackPressedListener {
                         }
                     }
                 });
-
-
 
         //운동이랑 카테고리 같으면 데이터 불러오는 코드
         db.collection("challenges").whereEqualTo("category", "운동")
@@ -161,8 +180,24 @@ public class FragHmExercise extends Fragment implements  onBackPressedListener {
                                                         String name = document.get("chal_name").toString();
                                                         System.out.println(name);
 
-                                                        itemList.add(item);
-                                                        adapter.notifyDataSetChanged();
+                                                        ///////추가) finish challenge 챌린지 리스트에서 안보이게 하기
+                                                        String end = document.get("end_date").toString();
+                                                        SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yy년 MM월 dd일", Locale.KOREA );
+                                                        Date currentTime = new Date();
+                                                        String oTime = mSimpleDateFormat.format ( currentTime );
+                                                        int compare = oTime.compareTo( end );
+                                                        if (compare<0){
+                                                            itemList.add(item);
+                                                            adapter.notifyDataSetChanged();
+                                                        }
+                                                        else{
+                                                            Log.d(TAG, "/////////////////////추가", task.getException());
+                                                        }
+
+                                                        //itemList.add(item);
+                                                        //adapter.notifyDataSetChanged();
+
+                                                        ///////
 
                                                     }
                                                 }
@@ -202,7 +237,6 @@ public class FragHmExercise extends Fragment implements  onBackPressedListener {
                 });
 
         mylist = adapter.getNameList();
-
         adapter_1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mylist);
         listview.setAdapter(adapter);
 
@@ -216,7 +250,6 @@ public class FragHmExercise extends Fragment implements  onBackPressedListener {
         searchText.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 if (mylist.contains(query)) {
                     adapter_1.getFilter().filter(query);
                     listview.setAdapter(adapter_1);
