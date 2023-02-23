@@ -2,7 +2,9 @@ package edu.sungshin.dolfin;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.telephony.BarringInfo;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -28,6 +31,8 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -37,12 +42,17 @@ public class FragHmCategoryChal extends Fragment implements onBackPressedListene
     TextView join_week_Count;
     TextView join_Date;
     TextView join_Intro;
+    Button btnchaljoin;
+    GoogleSignInClient mGoogleSignInClient;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<String> chal_my_list = new ArrayList<>();
     Bundle bundle = new Bundle();
     String chal_name = "";
-    GoogleSignInClient mGoogleSignInClient;
+    String email="";
+    ArrayList<chal_listview.ListViewItem> itemList = new ArrayList<chal_listview.ListViewItem>();
+    ArrayList<String> mylist = new ArrayList<>();
+    chal_listview adapter;
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,13 +63,49 @@ public class FragHmCategoryChal extends Fragment implements onBackPressedListene
         join_Intro = view.findViewById(R.id.join_intro);
 
         ArrayList<chal_listview.ListViewItem> items = new ArrayList<chal_listview.ListViewItem>();
+        Button join = (Button) view.findViewById(R.id.btnChalJoin);
+        Button move = (Button) view.findViewById(R.id.btnChalMove);
+
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail() // email addresses도 요청함
+                .build();
+
+        GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(getActivity());
+        email = gsa.getEmail();
 
         Bundle bundle = getArguments();
-        String chal_name = "";
+
         if(bundle != null){
             chal_name = bundle.getString("chal_name_check");
 
         }
+        ////-------------------------나의 챌린지 리스트//
+        mylist.clear();
+        db.collection("challenges")
+                .whereArrayContains("member_email", email)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot document : task.getResult()){
+                                mylist.add(document.get("chal_name").toString());
+                                System.out.println("=================" + mylist);
+                            }
+                            if(mylist.contains(chal_name)){
+                                gone(join);
+                                System.out.println("=======it contains " + chal_name);
+                            } else{
+                                gone(move);
+                                System.out.println("=======it doesnt contain " + chal_name);
+                            }
+                        }else{
+                            Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
 
         db.collection("challenges").whereEqualTo("chal_name", chal_name)
                 .get()
@@ -82,10 +128,98 @@ public class FragHmCategoryChal extends Fragment implements onBackPressedListene
         //메뉴 활성화
         setHasOptionsMenu(true);
 
-        //각 버튼 클릭시 이동화면
-        // 1) 가입버튼 클릭
-        Button join = (Button) view.findViewById(R.id.btnChalJoin);
-        join.setOnClickListener(this::onClick);
+        String finalChal_name = chal_name;
+        join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder alt_bld = new AlertDialog.Builder(getContext());
+
+                alt_bld.setMessage("가입하시겠습니까?");
+                alt_bld.setCancelable(true);
+                alt_bld.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                alt_bld.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(getActivity());
+                        String email = gsa.getEmail();
+
+                        Bundle bundle = getArguments();
+
+
+                        db.collection("challenges")
+                                .whereEqualTo("chal_name", finalChal_name)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if(task.isSuccessful()){
+                                            for(QueryDocumentSnapshot documentt : task.getResult()){
+                                                DocumentReference docRef = db.collection("challenges").document(documentt.getId());
+                                                System.out.println("=================" + documentt.getData());
+                                                docRef.update("member_email", FieldValue.arrayUnion(email));
+                                                docRef.update("member_num", (Long)documentt.get("member_num") + 1);
+
+                                            }
+                                        }else{
+                                            Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
+                                            //Log.d(TAG, "Error getting documents: ", task.getException());
+                                        }
+                                    }
+                                });
+
+                        db.collection("users")
+                                .whereEqualTo("gmail", email)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if(task.isSuccessful()){
+                                            for(QueryDocumentSnapshot documentt : task.getResult()){
+                                                DocumentReference docRef = db.collection("users").document(documentt.getId());
+                                                System.out.println("=================" + documentt.getData());
+                                                docRef.update("my_chal", FieldValue.arrayUnion(finalChal_name));
+
+                                            }
+                                        }else{
+                                            Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
+                                            //Log.d(TAG, "Error getting documents: ", task.getException());
+                                        }
+                                    }
+                                });
+
+                        Toast.makeText(getActivity(), "가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+
+                        // (추가) 가입완료 후 챌린지 화면으로 넘어가기
+                        Fragment fragment = new FragDfChal();
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString("chal_name_check", finalChal_name);
+                        fragment.setArguments(bundle1);
+                        FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+                        fm.replace(R.id.main_frame,fragment).commit();
+                    }
+                });
+                AlertDialog alertDialog = alt_bld.create();
+                alertDialog.show();
+
+            }
+        });
+        move.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new FragDolfin();
+                FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
+                fm.replace(R.id.main_frame,fragment).commit();
+            }
+        });
+
+
+
+
         //액션바
         ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
         actionBar.setTitle("챌린지 가입 페이지");
@@ -107,200 +241,9 @@ public class FragHmCategoryChal extends Fragment implements onBackPressedListene
 
         return;
     }
-    public void onClick(View view){
-
-        switch (view.getId()) {
-            case R.id.btnChalJoin:
-                GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(getActivity());
-                String email = gsa.getEmail();
-                Bundle bundle = getArguments();
-
-
-                if(bundle != null){
-                    chal_name = bundle.getString("chal_name_check");
-                }
-
-                db.collection("challenges")
-                        .whereEqualTo("chal_name", chal_name)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
-                                    for(QueryDocumentSnapshot documentt : task.getResult()){
-                                        DocumentReference docRef = db.collection("challenges").document(documentt.getId());
-                                        System.out.println("=================" + documentt.getData());
-                                        docRef.update("member_email", FieldValue.arrayUnion(email));
-
-                                        /// 추가) max 인원
-                                        Long mem_num = (Long) documentt.get("member_num") + 1;
-                                        if(mem_num-1< (Long)documentt.get("member_max")){
-                                            docRef.update("member_num", mem_num);
-
-                                            //데이터를 다이얼로그로 보냄
-                                            Bundle args = new Bundle();
-                                            args.putString("key", "value");
-                                            //-----------------------------------//
-                                            FragDialogChalJoin dialog = new FragDialogChalJoin();
-                                            dialog.setArguments(args);
-                                            dialog.show(getActivity().getSupportFragmentManager(),"tag");
-                                        }
-
-                                        else if(mem_num-1>= (Long)documentt.get("member_max")){
-                                            Toast.makeText(getActivity()," 챌린지 인원이 많아 가입이 어렵습니다. 다음에 다시 시도해주세요.",Toast.LENGTH_SHORT).show();
-                                        }
-                                        //docRef.update("member_num", mem_num);
-                                        ///
-
-                                    }
-                                }else{
-                                    Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
-                                    //Log.d(TAG, "Error getting documents: ", task.getException());
-                                }
-                            }
-                        });
-
-                db.collection("users")
-                        .whereEqualTo("gmail", email)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
-                                    for(QueryDocumentSnapshot documentt : task.getResult()){
-                                        DocumentReference docRef = db.collection("users").document(documentt.getId());
-                                        System.out.println("=================" + documentt.getData());
-                                        docRef.update("my_chal", FieldValue.arrayUnion(chal_name));
 
 
 
-                                    }
-                                }else{
-                                    Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
-                                    //Log.d(TAG, "Error getting documents: ", task.getException());
-                                }
-                            }
-                        });
-
-//                //데이터를 다이얼로그로 보냄
-//                Bundle args = new Bundle();
-//                args.putString("key", "value");
-//                //-----------------------------------//
-//                FragDialogChalJoin dialog = new FragDialogChalJoin();
-//                dialog.setArguments(args);
-//                dialog.show(getActivity().getSupportFragmentManager(),"tag");
-
-                break;
-               /* GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(getActivity());
-                String email = gsa.getEmail();
-
-                Bundle bundle = getArguments();
-
-                //나의 챌린지 목록 가져오는 코드
-                db.collection("users")
-                        .whereEqualTo("gmail", email)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
-                                    for(QueryDocumentSnapshot documentt : task.getResult()){
-                                        DocumentReference docRef = db.collection("users").document(documentt.getId());
-                                        System.out.println("=**********************" + documentt.get("my_chal"));
-                                        chal_my_list = ((ArrayList<String>)documentt.get("my_chal"));
-                                        System.out.println("******************" + chal_my_list);
-                                    }
-                                }else{
-                                    Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
-                                    //Log.d(TAG, "Error getting documents: ", task.getException());
-                                }
-                            }
-                        });
-
-                //이미 가입한 챌린지 토스트......
-                db.collection("challenges")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
-                                    for(QueryDocumentSnapshot documentt : task.getResult()){
-                                        for(String i :chal_my_list)
-                                            System.out.println("_----------------------------"+i);
-                                        System.out.println("***********************"+documentt.get("chal_name"));
-
-
-                                        if(Arrays.asList(chal_my_list).contains(documentt.get("chal_name"))) {
-                                            Toast.makeText(getActivity(), "이미 가입한 챌린지 입니다.", Toast.LENGTH_SHORT).show();
-                                            System.out.println("***완완완완완오나오ㅗ나오나ㅗㅇ농너ㅘ놔온**************");
-                                        }
-                                        else{
-                                            System.out.println("***ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ");
-                                            if(bundle != null){
-                                                chal_name = bundle.getString("chal_name_check");
-                                            }
-
-                                            db.collection("challenges")
-                                                    .whereEqualTo("chal_name", chal_name)
-                                                    .get()
-                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                            if(task.isSuccessful()){
-                                                                for(QueryDocumentSnapshot documentt : task.getResult()){
-                                                                    DocumentReference docRef = db.collection("challenges").document(documentt.getId());
-                                                                    System.out.println("=================" + documentt.getData());
-                                                                    docRef.update("member_email", FieldValue.arrayUnion(email));
-                                                                    docRef.update("member_num", (Long)documentt.get("member_num") + 1);
-                                                                    chal_my_list = ((ArrayList<String>)documentt.get("my_chal"));
-                                                                }
-                                                            }else{
-                                                                Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
-                                                                //Log.d(TAG, "Error getting documents: ", task.getException());
-                                                            }
-                                                        }
-                                                    });
-
-                                            db.collection("users")
-                                                    .whereEqualTo("gmail", email)
-                                                    .get()
-                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                            if(task.isSuccessful()){
-                                                                for(QueryDocumentSnapshot documentt : task.getResult()){
-                                                                    DocumentReference docRef = db.collection("users").document(documentt.getId());
-                                                                    System.out.println("=================" + documentt.getData());
-                                                                    docRef.update("my_chal", FieldValue.arrayUnion(chal_name));
-
-                                                                }
-                                                            }else{
-                                                                Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
-                                                                //Log.d(TAG, "Error getting documents: ", task.getException());
-                                                            }
-                                                        }
-                                                    });
-
-                                            //데이터를 다이얼로그로 보냄
-                                            Bundle args = new Bundle();
-                                            args.putString("key", "value");
-                                            //-----------------------------------//
-                                            FragDialogChalJoin dialog = new FragDialogChalJoin();
-                                            dialog.setArguments(args);
-                                            dialog.show(getActivity().getSupportFragmentManager(),"tag");
-                                            break;
-                                        }
-                                    }
-                                }else{
-                                    Toast.makeText(getActivity(),"오류",Toast.LENGTH_SHORT).show();
-                                    //Log.d(TAG, "Error getting documents: ", task.getException());
-                                }
-                            }
-                        });
-
-*/
-        }
-    }
 
     // (추가) 뒤로가기 기능 - FragHmExercise으로 이동
     @Override
@@ -309,6 +252,10 @@ public class FragHmCategoryChal extends Fragment implements onBackPressedListene
         Fragment fragment = new FragHmExercise();
         FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
         fm.replace(R.id.main_frame ,fragment).commit();
+    }
+
+    public void gone(Button btn_name){
+        btn_name.setVisibility((View.GONE));
     }
 
 }

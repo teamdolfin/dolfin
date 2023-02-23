@@ -173,12 +173,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                         intent.putExtra("id", acct.getId());
                                         intent.putExtra("name", acct.getDisplayName());
                                         startActivity(intent);
+                                        finish();
                                     }
                                     else {
 
                                         Toast.makeText(Login.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
+                                        finish();
 
                                     }
                                 }
